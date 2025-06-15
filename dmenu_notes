@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# Define the base folder for notes.
+# Double-quote the path to handle potential spaces in $HOME or 'notes'.
+folder="$HOME/notes/"
+
+# Define color variables for dmenu, following the Catppuccin Macchiato palette.
+base="#eff1f5"  # Rosewater
+text="#4c4f69"  # Text
+peach="#fe640b" # Peach (accent color)
+
+# Define the font for dmenu.
+# This variable is now used directly in the dmenu_opts array.
+font="ComicShannsMono Nerd Font Mono:size=12"
+
+# Define dmenu options as a bash array.
+# This is crucial for correctly handling spaces in the font name and other arguments,
+# avoiding the need for 'eval' which can lead to quoting issues.
+dmenu_opts=(
+  -i          # Case-insensitive matching
+  -l 4        # Display 4 lines
+  -fn "$font" # Font family and size (double-quoted)
+  -nb "$text" # Normal background color
+  -nf "$base" # Normal foreground color
+  -sb "$peach" # Selected background color
+  -sf "$base" # Selected foreground color
+)
+
+# Function to create a new note.
+newnote () {
+  # Prompt the user for a note name using dmenu.
+  # We pipe an empty string to dmenu because it expects input, but we don't have any initial suggestions.
+  # The <&- redirects stdin from /dev/null, preventing dmenu from hanging if no input is provided.
+  # If the user cancels (e.g., by pressing Esc), dmenu returns a non-zero exit code, and the script exits.
+  name="$(echo "" | dmenu "${dmenu_opts[@]}" -p "Enter a name: " <&-)" || exit 0
+
+  # Set a default name if the user entered nothing.
+  # The format is YYYY-MM-DD_HH-MM-SS.
+  : "${name:=$(date +%F_%T | tr ':' '-')}"
+
+  # Open the new note in nvim (Neovim) in a new terminal.
+  # 'setsid -f' detaches the command from the current session and runs it in the background.
+  # '$TERMINAL' is expected to be an environment variable pointing to your preferred terminal emulator.
+  # '-e nvim' tells the terminal to execute nvim.
+  # The note path is double-quoted to handle spaces in the folder or note name.
+  # '>/dev/null 2>&1' redirects stdout and stderr to /dev/null to prevent output in the current terminal.
+setsid -f "$TERM" -e nvim "${folder}${name}.md" >/dev/null 2>&1
+}
+
+# Function to select an existing note or create a new one.
+selected () {
+  # List existing notes in the folder, sorted by modification time (newest first).
+  # 'command ls -t1 "$folder"' is used for robustness.
+  # The output is combined with "New" option and piped to dmenu.
+  # The user's choice is captured in the 'choice' variable.
+  choice=$(echo -e "New\n$(command ls -t1 "$folder")" | dmenu "${dmenu_opts[@]}" -p "Choose note or create new: ")
+
+  # Use a case statement to act based on the user's choice.
+  case "$choice" in
+    New)
+      # If "New" was chosen, call the newnote function.
+      newnote
+      ;;
+    *.md)
+      # If a file ending with .md was chosen, open it in nvim.
+      # The full path is constructed and double-quoted for safety.
+      setsid -f "$TERMINAL" -e nvim "${folder}${choice}" >/dev/null 2>&1
+      ;;
+    *)
+      # For any other choice (e.g., user pressed Esc or entered invalid text), exit the script.
+      exit
+      ;;
+  esac
+}
+
+# Call the selected function to start the script.
+selected
+

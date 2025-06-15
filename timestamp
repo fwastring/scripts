@@ -1,0 +1,3 @@
+timestamp=$(printf "%(%H:%M:%S)T\\n" "-1") 
+echo "hello: ${timestamp}"
+
