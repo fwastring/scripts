@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Construct the dmenu command with color options
-dmenu_command="dmenu -c -bw 3 -i -l 6 "
+dmenu_command="dmenu -c -bw 3 -i -l 8 -p system"
 
-chosen=$(printf "kill\nzzz\nreboot\nshutdown\ndownload\nwatch" | eval "$dmenu_command")
+chosen=$(printf "download\nwatch\nvolume\nbrightness\nkill\nzzz\nreboot\nshutdown" | eval "$dmenu_command")
 
 case "$chosen" in
 	download)
@@ -28,6 +28,12 @@ case "$chosen" in
     ;;
   shutdown)
     shutdown now
+    ;;
+  volume)
+	  /home/fw/scripts/volume
+    ;;
+  brightness)
+	  /home/fw/scripts/brightness
     ;;
   *)
     exit 1
