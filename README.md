@@ -4,7 +4,7 @@ A collection of bash scripts for my day-to-day computer usage.
 
 ## camera
 
-WIP script for importing raw camera images from an SDcard and opening them in darktable.
+WIP script for importing raw camera images from an SDcard and opening them in [darktable](https://github.com/darktable-org/darktable).
 
 ## dmenu_sys
 
@@ -17,11 +17,11 @@ My go-to "menu" for doing activities such as:
 
 ## download
 
-The script that downloads the videos from yt using `yt-dlp`.
+The script that downloads the videos from yt using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
 ## passmenu
 
-Slightly modified version of `passmenu`, so that it uses my build of `dmenu` instead.
+Slightly modified version of [passmenu](https://git.zx2c4.com/password-store/tree/contrib/dmenu/passmenu), so that it uses my build of [dmenu](https://tools.suckless.org/dmenu/) instead.
 
 ## utilities
 
@@ -30,4 +30,4 @@ Should maybe be moved to dmenu_sys.
 
 ## watch
 
-The script that looks in my `~/videor` folder and allows me to select a video to view using `mpv`.
+The script that looks in my `~/videor` folder and allows me to select a video to view using [mpv](https://mpv.io/).
