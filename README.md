@@ -2,6 +2,10 @@
 
 A collection of bash scripts for my day-to-day computer usage.
 
+## [bluetooth](./bluetooth)
+
+The script that allows for connecting to a bluetooth device using [bluetoothctl](https://man.archlinux.org/man/extra/bluez-utils/bluetoothctl.1.en).
+
 ## [brightness](./brightness)
 
 The script that adjusts the brightness of my screen using [brightnessctl](https://github.com/Hummer12007/brightnessctl).
@@ -15,6 +19,7 @@ WIP script for importing raw camera images from an SD card and opening them in [
 My go-to "menu" for doing activities such as:
 - downloading yt videos to my videos directory
 - selecting and displaying a video from my media directory
+- connecting to a bluetooth device
 - adjusting volume output level
 - adjusting brightness of screen
 - killing processes
