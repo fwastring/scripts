@@ -1,42 +1,59 @@
 #!/usr/bin/env bash
 
 # Construct the dmenu command with color options
-dmenu_command="dmenu -c -bw 3 -i -l 9 -p system"
+dmenu_command="dmenu -c -bw 3 -i -l 12 -p system"
+download=" yt-dlp"
+umount=" unmount"
+delete=" delete"
+camera=" import"
+bluetooth=" bluetooth"
+volume=" volume"
+brightness=" brightness"
+kill=" kill"
+sleep=" sleep"
+shutdown=" power"
+reboot=" resurrect"
 
-chosen=$(printf "download\nwatch\nbluetooth\nvolume\nbrightness\nkill\nzzz\nreboot\nshutdown" | eval "$dmenu_command")
+chosen=$(printf "$download\n$umount\n$delete\n$camera\n$bluetooth\n$volume\n$brightness\n$kill\n$sleep\n$reboot\n$shutdown" | eval "$dmenu_command")
 
 case "$chosen" in
-	download)
+	"$umount")
+		/home/fw/scripts/umount
+		;;
+	"$download")
 		/home/fw/scripts/download
 		;;
-	watch)
-		/home/fw/scripts/watch
+	"$delete")
+		/home/fw/scripts/delete-video
 		;;
-  kill)
+  "$kill")
     kill_command="dmenu -c -bw 3 -i -l 10 -p Kill:"
     pid_to_kill=$(ps -u "$USER" -o pid,comm,%cpu,%mem | eval "$kill_command" | awk '{print $1}')
     if [ -n "$pid_to_kill" ]; then
       xargs -r kill <<< "$pid_to_kill"
     fi
     ;;
-  zzz)
+  "$sleep")
     slock -m "$(cowsay "$(fortune)" | lolcat -ft)" &
     systemctl suspend -i
     ;;
-  reboot)
+  "$reboot")
     systemctl reboot -i
     ;;
-  shutdown)
+  "$shutdown")
     shutdown now
     ;;
-  volume)
+  "$volume")
 	  /home/fw/scripts/volume
     ;;
-  brightness)
+  "$brightness")
 	  /home/fw/scripts/brightness
     ;;
-  bluetooth)
+  "$bluetooth")
 	  /home/fw/scripts/bluetooth
+    ;;
+  "$camera")
+	  /home/fw/scripts/camera
     ;;
   *)
     exit 1
