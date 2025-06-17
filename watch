@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 shopt -s nocasematch
 
-dir=~/videor/
+dir=~/videor/to-watch/
 
-(eza --no-quotes "$dir") | grep -E '\.webm' | dmenu -i -c -l 5 -bw 3 -p Watch | while IFS= read -r selection; do
+(eza --no-quotes "$dir") | grep -E '\.webm' | dmenu -i -c -l 10 -bw 3 -p watch: | while IFS= read -r selection; do
     [[ -n "$selection" ]] && devour mpv "$dir$selection"
 done
