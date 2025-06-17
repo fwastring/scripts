@@ -14,14 +14,21 @@ The script that adjusts the brightness of my screen using [brightnessctl](https:
 
 WIP script for importing raw camera images from an SD card and opening them in [darktable](https://github.com/darktable-org/darktable).
 
+## [delete-video](./delete-video)
+
+A script for removing watched videos from hard drive and making na entry for them in a history file.
+
 ## [dmenu_sys](./dmenu_sys)
 
 My go-to "menu" for doing activities such as:
 - downloading yt videos to my videos directory
+- removing videos and putting them in history
 - selecting and displaying a video from my media directory
+- importing raw images from my sdcard and opening them in darktable
 - connecting to a bluetooth device
 - adjusting volume output level
 - adjusting brightness of screen
+- unmounting external drives
 - killing processes
 - suspending computer
 - rebooting
@@ -34,6 +41,10 @@ The script that downloads the videos from yt using [yt-dlp](https://github.com/y
 ## [passmenu](./passmenu)
 
 Slightly modified version of [passmenu](https://git.zx2c4.com/password-store/tree/contrib/dmenu/passmenu), so that it uses my build of [dmenu](https://tools.suckless.org/dmenu/) instead.
+
+## [umount](./umount)
+
+A script for unmounting external drives using dmenu as a prompt for `lsblk` and `systemd-mount`.
 
 ## [volume](./volume)
 
