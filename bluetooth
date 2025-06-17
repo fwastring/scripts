@@ -2,7 +2,6 @@
 shopt -s nocasematch
 
 (bluetoothctl devices)  | dmenu -i -c -l 5 -bw 3 -p bluetooth | while IFS= read -r selection; do
-    # [[ -n "$selection" ]] && bluetoothctl connect 
 	[[ -n "$selection" ]] || exit 0
 	device=$(echo "$selection" | awk '{split($0,a," "); print a[2]}')
 	bluetoothctl connect "$device"
