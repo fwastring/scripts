@@ -34,8 +34,7 @@ case "$chosen" in
     fi
     ;;
   "$sleep")
-    slock -m "$(cowsay "$(fortune)" | lolcat -ft)" &
-    systemctl suspend -i
+	  /home/fw/scripts/sleep
     ;;
   "$reboot")
     systemctl reboot -i
