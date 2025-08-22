@@ -5,6 +5,6 @@ dir=~/videor/to-watch/
 
 # Build the selection list and map it to full filenames
 # url=$(dmenu -i -c -bw 3 -p Download)
-url="$(echo "" | eval "dmenu -i -c -bw 3 -p download:" <&-)" || exit 0
+url="$(echo "" | eval "wmenu -i -p download:" <&-)" || exit 0
 
 [[ -n "$url" ]] && yt-dlp -o "$dir%(title)s - %(uploader)s" "$url"

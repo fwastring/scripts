@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-shopt -s nocasematch
-
-(lsblk -o path,mountpoints,type,uuid) | grep -E "PATH.*|sd[a-f].*"  | dmenu -i -c -l 5 -bw 3 -p unmount: | while IFS= read -r selection; do
-	node="$(echo "$selection" | awk '{print $1}')"
-	mountpoint="$(echo "$selection" | awk '{print $2}')"
-	echo "$mountpoint"
-	sudo systemd-mount --unmount "$mountpoint" && dunstify "Unmounted $node from $mountpoint"
-done

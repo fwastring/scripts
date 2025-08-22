@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-slock -m "$(cowsay "$(fortune -s -e)" | lolcat -ft)" &
-systemctl suspend -i

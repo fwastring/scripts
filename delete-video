@@ -4,7 +4,7 @@ shopt -s nocasematch
 dir=~/videor/to-watch/
 seen_dir="$HOME/videor/seen/"
 
-(eza --no-quotes "$dir") | grep -E '\.webm' | dmenu -i -c -l 10 -bw 3 -p delete | while IFS= read -r selection; do
+(eza --no-quotes "$dir") | grep -E '\.webm' | wmenu -i -l 10 -p delete | while IFS= read -r selection; do
     [[ -n "$selection" ]] && rm "$dir$selection"
 	echo "$selection - $(date '+%F %T')" >> "$seen_dir/watch_history"
 done
