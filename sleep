@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# swaylock -c eff1f5
+systemctl suspend -i
