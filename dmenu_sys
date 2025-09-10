@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-dmenu_command="wmenu -l 6 -p system"
+dmenu_command="rofi -dmenu"
 download=" get video"
 delete=" delete video"
 bluetooth=" bluetooth"
@@ -8,32 +8,37 @@ kill=" kill process"
 reboot=" reboot"
 shutdown=" power"
 
-chosen=$(printf "$download\n$delete\n$bluetooth\n$kill\n$reboot\n$shutdown" | eval "$dmenu_command")
+chosen=$(printf "%s\n%s\n%s\n%s\n%s\n%s\n" "$download" "$delete" "$bluetooth" "$kill" "$reboot" "$shutdown" | $dmenu_command)
 
 case "$chosen" in
-	"$download")
-		/home/fw/scripts/download
-		;;
-	"$delete")
-		/home/fw/scripts/delete-video
-		;;
-  "$kill")
-    kill_command="wmenu -i -l 10 -p Kill:"
-    pid_to_kill=$(ps -u "$USER" -o pid,comm,%cpu,%mem | eval "$kill_command" | awk '{print $1}')
+    "$download")
+        /home/fw/scripts/download
+        ;;
+    "$delete")
+        /home/fw/scripts/delete-video
+        ;;
+    "$bluetooth")
+        /home/fw/scripts/bluetooth
+        ;;
+"$kill")
+    # List processes for the current user, then pipe the output to rofi
+    kill_command="rofi -dmenu -i -p 'Kill:'"
+    
+    # Use awk to get only the PID from the selected line
+    pid_to_kill=$(ps -u "$USER" -o pid,comm,%cpu,%mem | $kill_command | awk '{print $1}')
+    
+    # Check if a PID was selected before attempting to kill
     if [ -n "$pid_to_kill" ]; then
-      xargs -r kill <<< "$pid_to_kill"
+        xargs -r kill <<< "$pid_to_kill"
     fi
     ;;
-  "$reboot")
-    systemctl reboot -i
-    ;;
-  "$shutdown")
-    shutdown now
-    ;;
-  "$bluetooth")
-	  /home/fw/scripts/bluetooth
-    ;;
-  *)
-    exit 1
-    ;;
+    "$reboot")
+        systemctl reboot -i
+        ;;
+    "$shutdown")
+        shutdown now
+        ;;
+    *)
+        exit 1
+        ;;
 esac
