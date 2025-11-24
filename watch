@@ -3,6 +3,6 @@ shopt -s nocasematch
 
 dir=~/videor/to-watch/
 
-(eza --no-quotes "$dir") | grep -E '\.webm' | wmenu -i -l 10 -p watch: | while IFS= read -r selection; do
-    [[ -n "$selection" ]] && devour mpv "$dir$selection"
+(eza --no-quotes "$dir") |  rofi -dmenu -i -l 10 -p watch: | while IFS= read -r selection; do
+    [[ -n "$selection" ]] && mpv "$dir$selection"
 done
