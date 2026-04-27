@@ -1,0 +1,4 @@
+tailscale down
+netbird down
+netbird up
+tailscale up

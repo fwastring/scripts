@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 shopt -s nocasematch
 
-(bluetoothctl devices)  | wmenu -i -l 5 -p bluetooth | while IFS= read -r selection; do
+(bluetoothctl devices)  | rofi -dmenu -i  | while IFS= read -r selection; do
 	[[ -n "$selection" ]] || exit 0
 	device=$(echo "$selection" | awk '{split($0,a," "); print a[2]}')
 	bluetoothctl connect "$device"
